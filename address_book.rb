@@ -15,7 +15,7 @@ get '/' do
 #phils class example
 db = PG.connect(:dbname => 'address_book',
                 :host => 'localhost')
-sql = "select first, age from contacts"
+sql = "select first from contacts"
 #execute data base iteration. Return keys + values into contacts
 db.exec(sql) do |result|
   result.each do |row|
@@ -24,4 +24,17 @@ db.exec(sql) do |result|
 end
 db.close
 erb :index
+end
+
+#individual contacts by first name
+#use phils' class example
+get '/:first' do
+  @first = params[:first]
+  @contact_info = []
+  db = PG.connect(:dbname => 'address_book',
+                  :host => 'localhost')
+  @contact = db.exec(
+    "SELECT * FROM contacts WHERE first = '#{@first}' ").first
+  db.close
+  erb :contact_info
 end

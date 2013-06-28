@@ -38,3 +38,7 @@ get '/:first' do
   db.close
   erb :contact_info
 end
+
+get '/contact/new_contact' do
+  erb :entry
+end

@@ -12,9 +12,11 @@ db = PG.connect(:dbname => 'address_book',
 
 get '/' do
 @contacts = []
+#phils class example
 db = PG.connect(:dbname => 'address_book',
                 :host => 'localhost')
 sql = "select first, age from contacts"
+#execute data base iteration. Return keys + values into contacts
 db.exec(sql) do |result|
   result.each do |row|
     @contacts << row
@@ -23,16 +25,3 @@ end
 db.close
 erb :index
 end
-
-# puts "what's your name girl?"
-# name = gets.chomp
-# sql = "insert into contacts (first) values ('#{name}')"
-# db.exec(sql)
-# sql = "select first, age from contacts"
-# db.exec(sql) do |result|
-#   result.each do |row|
-#     puts row
-#   end
-# end
-# # db.close
-# db.close

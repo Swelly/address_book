@@ -1,1 +1,6 @@
-<h1><%= @contacts[0].class %></h1>
+<h1>My Address Book</h1>
+<ol>
+<% @contacts.each do |first, entry| %>
+<li><%= first["first"].capitalize %></li>
+<% end %>
+</ol>

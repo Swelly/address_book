@@ -1,6 +1,7 @@
 <h1>My Address Book</h1>
+</br>
 <ol>
 <% @contacts.each do |first, entry| %>
-<li><%= first["first"].capitalize %></li>
+<p><a href="<%=first["first"]%>"><%= first["first"].capitalize %></p></a>
 <% end %>
 </ol>

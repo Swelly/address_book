@@ -39,6 +39,25 @@ get '/:first' do
   erb :contact_info
 end
 
+#get info from form on entry.erb
 get '/contact/new_contact' do
   erb :entry
+end
+
+#post the GET info into address book database
+post '/new_contact' do
+#set instance variables to form entry
+  @first = params[:first]
+  @last = params[:last]
+  @age = params[:age].to_i
+  @gender = params[:gender]
+  @dtgd = params[:dtgd]
+  @phone = params[:phone]
+#Use code from earlier DB entry
+  db = PG.connect(:dbname => 'address_book',
+                  :host => 'localhost')
+  db.exec("INSERT INTO contacts (first, last, age, gender, dtgd, phone) values ('#{@first}', '#{@last}', #{@age}, '#{@gender}', #{@dtgd}, '#{@phone}')")
+  db.close
+  #Close and redirect to index (my addresses)
+  redirect to('/')
 end

@@ -4,43 +4,35 @@
 # list people
 require 'pg'
 require 'pry'
+require 'sinatra'
+require 'sinatra/reloader' if development?
 
-puts "Hey gurl"
-
-# get all the inputs
-# put them in the string
-# make it work
-
-# this establishes a connection to the database
-# db = PG.connect(:dbname => 'address_book',
-#   :host => 'localhost')
-# executing sql code
-# passing a string of sql to the database
-
-# insert into database
 db = PG.connect(:dbname => 'address_book',
   :host => 'localhost')
 
-puts "what's your name girl?"
-name = gets.chomp
-sql = "insert into contacts (first) values ('#{name}')"
-db.exec(sql)
+get '/' do
+@contacts = []
+db = PG.connect(:dbname => 'address_book',
+                :host => 'localhost')
 sql = "select first, age from contacts"
 db.exec(sql) do |result|
   result.each do |row|
-    puts row
+    @contacts << row
   end
 end
-# db.close
 db.close
+erb :index
+end
 
-# reads from database
-# db = PG.connect(:dbname => 'address_book',
-#   :host => 'localhost')
+# puts "what's your name girl?"
+# name = gets.chomp
+# sql = "insert into contacts (first) values ('#{name}')"
+# db.exec(sql)
 # sql = "select first, age from contacts"
 # db.exec(sql) do |result|
 #   result.each do |row|
 #     puts row
 #   end
 # end
+# # db.close
 # db.close

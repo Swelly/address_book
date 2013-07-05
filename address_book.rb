@@ -53,11 +53,13 @@ post '/new_contact' do
   @gender = params[:gender]
   @dtgd = params[:dtgd]
   @phone = params[:phone]
-#Use code from earlier DB entry
+
+  sql = "INSERT INTO contacts (first, last, age, gender, dtgd, phone) VALUES
+    ('#{@first}', '#{@last}', #{@age}, '#{@gender}', #{@dtgd}, '#{@phone}')"
   db = PG.connect(:dbname => 'address_book',
                   :host => 'localhost')
-  db.exec("INSERT INTO contacts (first, last, age, gender, dtgd, phone) values ('#{@first}', '#{@last}', #{@age}, '#{@gender}', #{@dtgd}, '#{@phone}')")
+  db.exec(sql)
   db.close
   #Close and redirect to index (my addresses)
-  redirect to('/')
+  redirect to('/contacs')
 end
